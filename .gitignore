@@ -1,0 +1,7 @@
+/.gradle
+/output
+/.idea
+*.iml
+*.dll
+/gradle
+gradlew*

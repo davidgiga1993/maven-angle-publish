@@ -1,0 +1,50 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+	windows
+}
+sourceSets {
+	windows {
+		resources {
+			srcDirs = ['libs/win']
+			includes = ['*.dll']
+		}
+	}
+}
+
+task winJar(type: Jar) {
+	from sourceSets.windows.output
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId 'org.devcore'
+			artifactId 'angle'
+			version '1.0.0'
+			artifact(winJar) {
+				classifier 'natives-windows'
+			}
+		}
+	}
+	repositories {
+		maven {
+			url = 'output'
+		}
+	}
+}
+
+
+dependencies {
+}
